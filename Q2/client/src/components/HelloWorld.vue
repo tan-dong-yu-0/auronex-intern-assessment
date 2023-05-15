@@ -1,15 +1,15 @@
 <script setup>
-import { ref } from 'vue'
+// import { ref } from 'vue'
 
-defineProps({
-  msg: String,
-})
+// defineProps({
+//   msg: String,
+// })
 
-const count = ref(0)
+// const count = ref(0)
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <!-- <h1>{{ msg }}</h1>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
@@ -30,7 +30,7 @@ const count = ref(0)
     <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
     in your IDE for a better DX
   </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p> -->
 </template>
 
 <style scoped>
