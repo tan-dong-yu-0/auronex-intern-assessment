@@ -2,6 +2,10 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
+// not using ssr makes the image loading slow
+// ssr is used to render the page on the server side
+// which means html is rendered on server before sending to client
+
 const product = ref()
 const route = useRoute();
 
