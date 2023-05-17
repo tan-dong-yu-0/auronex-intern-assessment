@@ -4,8 +4,8 @@ import Home from "../views/Home.vue"
 import ProductDetails from "../views/ProductDetails.vue"
 
 const routes = [
-	{ path: "/", name: "home", component: Home },
-	{ path: "/login", name: "login", component: Login },
+	{ path: "/", name: "login", component: Login },
+	{ path: "/home", name: "home", component: Home },
 	{ path: "/product/:id", name: "product-details", component: ProductDetails },
 ]
 
