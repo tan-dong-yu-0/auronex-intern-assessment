@@ -17,34 +17,19 @@ async function handleLogin() {
 		body: JSON.stringify({
 			username: username.value,
 			password: password.value,
-			// expiresInMins: 60, // optional
+			expiresInMins: 60, // optional
 		})
 	})
-	const data = await res.json()
+	const data = await res.json();
+
 	if (res.ok) {
 		authToken = data.token;
-		router.push('/');
-		console.log(data)
+		// set to session storage so i could access it from the other page
+		sessionStorage.setItem('authToken', authToken);
+		await router.push('/home');
+		console.log("User: ", data)
 	} else {
 		console.log(data)
-	}
-	// use await to pause execution  because i will need authToken for later
-
-
-	// use authToken to make a request to the /login endpoint
-	if (authToken) {
-		fetch(`http://localhost:5173/login`, {
-			method: "GET",
-			headers: {
-				'Authorization': `Bearer ${authToken}`,
-				'Content-Type': 'application/json'
-			}
-		})
-			.then(res => res.json())
-			.then(console.log)
-			.catch(error => {
-				console.error("ERROR", error);
-			});
 	}
 }
 </script>

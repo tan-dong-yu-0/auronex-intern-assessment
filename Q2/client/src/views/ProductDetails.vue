@@ -16,9 +16,16 @@ onMounted(async () => {
 	product.value = await fetchData(productId)
 })
 
+const authToken = sessionStorage.getItem('authToken');
 async function fetchData(productId) {
 	// fetch the data dynamically accoridng to the id
-	const res = await fetch(`https://dummyjson.com/products/${productId}`)
+	const res = await fetch(`https://dummyjson.com/auth/products/${productId}`, {
+		method: 'GET',
+		headers: {
+			'Authorization': 'Bearer ' + authToken,
+			'Content-Type': 'application/json',
+		}
+	})
 	// turn data into json format
 	const data = await res.json()
 	return {
@@ -32,14 +39,17 @@ async function fetchData(productId) {
 </script>
 
 <template>
-	<p>DETAILS</p>
-	<!-- for some reason, page can't load without v-if, will thorw error -->
-	<div v-if="product">
-		<h1>{{ product.name }}</h1>
-    <p>Price: RM {{ product.price }}</p>
-    <img :src="product.image" :alt="product.name">
-    <p>{{ product.description }}</p>
+	<div v-if="authToken">
+		<p>DETAILS</p>
+		<!-- for some reason, page can't load without v-if, will thorw error -->
+		<div v-if="product">
+			<h1>{{ product.name }}</h1>
+			<p>Price: RM {{ product.price }}</p>
+			<img :src="product.image" :alt="product.name">
+			<p>{{ product.description }}</p>
+		</div>
 	</div>
+	<h2 v-else>You Do Not Have An Authenticated Token!</h2>
 </template>
 
 <style scoped></style>
