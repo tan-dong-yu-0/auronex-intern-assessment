@@ -2,6 +2,10 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+// did a mistake of not adding /auth/RESOURCES in the fetch url, 
+// fetching /RESOURCES without /auth/ will just fetch you data
+// that is not authenticated
+
 const username = ref('');
 const password = ref('');
 
@@ -24,9 +28,10 @@ async function handleLogin() {
 
 	if (res.ok) {
 		authToken = data.token;
+		const userId = data.id;
 		// set to session storage so i could access it from the other page
 		sessionStorage.setItem('authToken', authToken);
-		await router.push('/home');
+		await router.push(`/home/${userId}`);
 		console.log("User: ", data)
 	} else {
 		console.log(data)
@@ -35,8 +40,10 @@ async function handleLogin() {
 </script>
 
 <template>
-	<p>Use This</p>
-	<p>Name: atuny0, Password: 9uQFF1Lh</p>
+	<p>Use These</p>
+	<p>User1: atuny0, 9uQFF1Lh</p>
+	<p>User2: hbingley1, CQutx25i8r</p>
+	<p>User3: rshawe2, OWsTbMUgFc</p>
 	<form @submit.prevent="handleLogin">
 		<input type="text" v-model="username" placeholder="Username" />
 		<br>
