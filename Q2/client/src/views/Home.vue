@@ -71,9 +71,10 @@ function signOut() {
 }
 
 function setTimeOut(searchOption, duration) {
+	clearTimeout()
 	setTimeout(() => {
-		console.log("5 seconds")
 		if (searchOption.value === '') {
+			console.log("4 seconds")
 			fetchProducts()
 		}
 	}, duration)
@@ -81,7 +82,7 @@ function setTimeOut(searchOption, duration) {
 
 function searchProductByName() {
 
-	clearTimeout()
+	// clearTimeout()
 	// fetch products by name
 	fetch(`https://dummyjson.com/auth/products/search?q=${searchProduct.value}`, {
 		method: 'GET',
@@ -105,12 +106,12 @@ function searchProductByName() {
 			console.log(data)
 		});
 
-	setTimeOut(searchProduct, 3000)
+	setTimeOut(searchProduct, 4000)
 }
 
 function searchProductByCategory() {
 
-	clearTimeout()
+	// clearTimeout()
 
 	fetch(`https://dummyjson.com/auth/products/category/${searchCategory.value}`, {
 		method: 'GET',
@@ -190,34 +191,40 @@ function toggleCart() {
 				<div class="cart-items">
 					<div v-for="item in userCart" :key="item.id">
 						<img :src="item.image" :alt="item.name">
-						<p>{{ item.name }}</p>
-						<p>{{ item.quantity }}</p>
+						<p>Name: {{ item.name }}</p>
+						<p>Quantity: {{ item.quantity }}</p>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<h1>Home Page</h1>
-		<button @click="signOut">Sign Out</button>
-		<button @click="sortByRelevance">Sort By Relevance</button>
-		<button @click="sortByPriceAscending">Sort in Ascending order</button>
-		<button @click="sortByPriceDescending">Sort in Descending order</button>
-		<form @submit.prevent="searchProductByName">
-			<input type="text" v-model="searchProduct" placeholder="Search Product" />
-			<button type="submit">Search Product</button>
-		</form>
-		<form @submit.prevent="searchProductByCategory">
-			<input type="text" v-model="searchCategory" placeholder="Search Category" />
-			<button type="submit">Search Category</button>
-		</form>
+		<button class="signout-button" @click="signOut">Sign Out</button>
+		<div class="sort-buttons-container">
+			<div class="sort-buttons">
+				<button @click="sortByRelevance">Sort By Relevance</button>
+				<button @click="sortByPriceAscending">Sort Price in Ascending order</button>
+				<button @click="sortByPriceDescending">Sort Price in Descending order</button>
+			</div>
+		</div>
+		<div class="form-container">
+			<form @submit.prevent="searchProductByName">
+				<input type="text" v-model="searchProduct" placeholder="Search Product" />
+				<button type="submit">Search Product</button>
+			</form>
+			<form @submit.prevent="searchProductByCategory">
+				<input type="text" v-model="searchCategory" placeholder="Search Category" />
+				<button type="submit">Search Category</button>
+			</form>
+		</div>
 
 		<div class="card-container">
 			<div v-for="product in products" :key="product.name" @click="viewProductDetails(product.id)">
 				<div class="list-items">
 					<img :src="product.image" :alt="product.name">
-					<p>{{ product.name }}</p>
+					<p>Name: {{ product.name }}</p>
 					<p>RM {{ product.price }}</p>
-					<p>{{ product.category }}</p>
+					<p>Category: {{ product.category }}</p>
 					<button @click.stop="addToCart(product.id, product.name, product.image)">Add To Cart</button>
 				</div>
 			</div>
@@ -246,7 +253,6 @@ img {
 	top: 20px;
 	right: 20px;
 	z-index: 999;
-	background-color: #f0f0f0;
 	padding: 10px 20px;
 	border: none;
 	border-radius: 5px;
@@ -278,6 +284,27 @@ img {
 	/* Enable vertical scrolling when content exceeds the maximum height */
 }
 
+.signout-button {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	/* height: 100vh; */
+}
+
+.sort-buttons-container {
+	display: flex;
+	/* flex-direction: column; */
+	/* justify-content: end; */
+	max-width: 200px;
+}
+
+.sort-buttons>button {
+	/* min-width: 200px; */
+	font-weight: 700;
+	background-color: #dfdfdf;
+
+}
+
 .card-container {
 	display: flex;
 	/* flex-direction: column; */
@@ -293,11 +320,27 @@ img {
 }
 
 .list-items {
-	text-decoration: none;
+	/* text-decoration: none; */
 	color: black;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 	/* flex-basis: 20%; */
 	/* display: flex; */
 	/* flex-direction: column; */
+}
+
+.list-items>p {
+	display: flex;
+	margin: 0;
+}
+
+.list-items>button {
+	border-radius: 0;
+	background: #dfdfdf;
+	margin-top: 15px;
+	width: 100%;
 }
 
 /* how to wrap the ul to dislay 5 columns and 2 rows */
