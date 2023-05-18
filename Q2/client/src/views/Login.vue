@@ -31,7 +31,7 @@ async function handleLogin() {
 		const userId = data.id;
 		// set to session storage so i could access it from the other page
 		sessionStorage.setItem('authToken', authToken);
-		await router.push(`/home/${userId}`);
+		await router.push('/home');
 		console.log("User: ", data)
 	} else {
 		console.log(data)
