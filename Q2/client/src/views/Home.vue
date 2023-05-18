@@ -3,6 +3,9 @@ import { ref, onMounted } from 'vue';
 import router from '../router';
 import { useRoute } from 'vue-router';
 
+// user cart will be gone if refresh the page
+// because it is not stored in the database
+
 const products = ref([])
 const currentPage = ref(1)
 const searchProduct = ref('')
@@ -16,16 +19,6 @@ onMounted(async () => {
 	console.log("UserCart", userCart.value)
 })
 const authToken = sessionStorage.getItem('authToken');
-
-// fetch('https://dummyjson.com/auth/carts/user/1', {
-// 	method: 'GET',
-// 	headers: {
-// 		'Authorization': 'Bearer ' + authToken,
-// 		'Content-Type': 'application/json',
-// 	}
-// })
-// 	.then(res => res.json())
-// 	.then(console.log);
 
 async function fetchProducts() {
 	// if on 1st page skip none
@@ -81,8 +74,6 @@ function setTimeOut(searchOption, duration) {
 }
 
 function searchProductByName() {
-
-	// clearTimeout()
 	// fetch products by name
 	fetch(`https://dummyjson.com/auth/products/search?q=${searchProduct.value}`, {
 		method: 'GET',
@@ -110,9 +101,6 @@ function searchProductByName() {
 }
 
 function searchProductByCategory() {
-
-	// clearTimeout()
-
 	fetch(`https://dummyjson.com/auth/products/category/${searchCategory.value}`, {
 		method: 'GET',
 		headers: {
@@ -147,6 +135,12 @@ function sortByPriceDescending() {
 }
 
 function sortByRelevance() {
+	// sort by name length
+	// ideal implementation would be
+	// there should only be one search box instead of two
+	// based on the search value, it will search for the product name and category
+	// and then sort it by how close the search value is to the product name and category
+	// or you can give number for them to rank it
 	products.value.sort((a, b) => {
 		return a.name.length - b.name.length;
 	});
@@ -157,8 +151,6 @@ function viewProductDetails(productId) {
 }
 
 function addToCart(productId, productName, productImage) {
-	// const userID = route.params.id;
-	// i want to use map over find
 	const itemInCart = userCart.value.find(item => item.id === productId)
 
 	if (itemInCart) {
@@ -242,10 +234,6 @@ function toggleCart() {
 img {
 	height: 150px;
 	width: 180px;
-}
-
-.cart-container {
-	position: relative;
 }
 
 .cart-toggle {
