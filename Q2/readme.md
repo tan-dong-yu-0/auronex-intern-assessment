@@ -1,6 +1,10 @@
 # ProductXpress
 
-A simple e-commerce webapp!
+A simple e-commerce webapp that allows users to browse through a list of products, add products to cart.
+
+User can also search for products by category or by name.
+
+The user auth token will be stored inside sessiostorage and will be cleared when the user logs out.
 
 ## Screenshots
 
